@@ -43,7 +43,7 @@ public class ClientCSVServices implements GenericCSV<Client> {
                 Client client = new Client(tokens[0], tokens[1], tokens[2], Integer.parseInt(tokens[3]), tokens[4]);
                 clients.add(client);
             }
-        }catch (IOException e){
+        }catch (IOException  | NumberFormatException e){
             System.out.println("Error reading from file!");
 
         }

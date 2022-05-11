@@ -19,7 +19,7 @@ public class App {
     private PackageServices packageServices = new PackageServices();
     private DriverServices driverServices  = new DriverServices();
     private CarServices carServices = new CarServices();
-    private TransportServices transportServices = new TransportServices();
+    //private TransportServices transportServices = new TransportServices();
     private PackageCSVService packageCSVService = new PackageCSVService();
     private  ClientServices clientServices = new ClientServices();
     public static void main(String args[]) throws InvalidDataException {
@@ -207,25 +207,32 @@ public class App {
             System.out.println(car);
         }
     }
-    void readClient() throws InvalidDataException {
+    void readClient(){
         System.out.println("How many clients do you add?");
         int c = Integer.parseInt(s.nextLine());
         for(int i = 0 ; i < c ;i++){
             System.out.print("The client no: ");
             System.out.println(i+1);
-            System.out.print("Last Name: ");
-            String lastName = s.nextLine();
-            System.out.print("First Name: ");
-            String firstName = s.nextLine();
-            System.out.print("Phone No: ");
-            String phoneNo = s.nextLine();
-            System.out.println("User client: ");
-            int userClient = Integer.parseInt(s.nextLine());
-            System.out.println("Adresa: ");
-            String adresa = s.nextLine();
+            try {
+                System.out.print("Last Name: ");
+                String lastName = s.nextLine();
+                System.out.print("First Name: ");
+                String firstName = s.nextLine();
+                System.out.print("Phone No: ");
+                String phoneNo = s.nextLine();
+                System.out.println("User client: ");
+                int userClient = Integer.parseInt(s.nextLine());
+                System.out.println("Adresa: ");
+                String adresa = s.nextLine();
 
-            Client client = new Client(lastName,firstName,phoneNo,userClient,adresa);
-            clientServices.addNewClients(lastName,firstName,phoneNo,userClient,adresa);
+                clientServices.addNewClients(lastName,firstName,phoneNo,userClient,adresa);
+            }catch (InvalidDataException ex){
+                System.out.println("Invalid data!");
+            }
+
+            //Client client = new Client(lastName,firstName,phoneNo,userClient,adresa);
+           // clientServices.addNewClients(lastName,firstName,phoneNo,userClient,adresa);
+
         }
     }
 
