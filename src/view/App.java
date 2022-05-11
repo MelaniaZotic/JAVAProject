@@ -207,6 +207,14 @@ public class App {
             System.out.println(car);
         }
     }
+    void printAllClients(){
+        List<Client> clients = clientServices.getAllClients();
+        if(clients.size() == 0){
+            for(Client client:clients){
+                System.out.println(client);
+            }
+        }
+    }
     void readClient(){
         System.out.println("How many clients do you add?");
         int c = Integer.parseInt(s.nextLine());
@@ -226,13 +234,9 @@ public class App {
                 String adresa = s.nextLine();
 
                 clientServices.addNewClients(lastName,firstName,phoneNo,userClient,adresa);
-            }catch (InvalidDataException ex){
-                System.out.println("Invalid data!");
+            }catch (InvalidDataException | NumberFormatException ex){
+                System.out.println(ex.getMessage());
             }
-
-            //Client client = new Client(lastName,firstName,phoneNo,userClient,adresa);
-           // clientServices.addNewClients(lastName,firstName,phoneNo,userClient,adresa);
-
         }
     }
 
