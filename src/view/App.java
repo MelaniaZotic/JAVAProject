@@ -98,25 +98,30 @@ public class App {
                 break;
             case 6:
                 printAllCars();
-                audit("");
+                audit("All cars are listed");
                 break;
             case 7:
                 printAllPackages();
+                audit("All packages are listed");
                 break;
             case 8:
                 printAllDrivers();
+                audit("All drivers are listed");
                 break;
             case 9:
                 printAllCompanies();
+                audit("All companies are listed");
                 break;
             case 10:
                 updateDriver();
+                audit("Driver updated");
                 break;
             case 11:
                 System.out.println("Enter de id of the driver to delete: ");
                 int id = s.nextInt();
                 s.nextLine();
                 driverServices.deleteDriver(id);
+                audit("Driver deleted");
                 break;
 
             case 12:
