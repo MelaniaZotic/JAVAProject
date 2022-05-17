@@ -25,13 +25,11 @@ public class App {
     public static void main(String args[]) throws InvalidDataException {
 
         view.App app = new view.App();
-        while (true) {
             app.showMenu();
             int option = app.readOption();
             app.execute(option);
             app.listedCSVFiles();
             app.listedInCSVFiles();
-        }
     }
     private void showMenu() {
         System.out.println("---------------------");
@@ -228,9 +226,9 @@ public class App {
                 String firstName = s.nextLine();
                 System.out.print("Phone No: ");
                 String phoneNo = s.nextLine();
-                System.out.println("User client: ");
+                System.out.print("User client: ");
                 int userClient = Integer.parseInt(s.nextLine());
-                System.out.println("Adresa: ");
+                System.out.print("Adresa: ");
                 String adresa = s.nextLine();
 
                 clientServices.addNewClients(lastName,firstName,phoneNo,userClient,adresa);
