@@ -1,7 +1,7 @@
 package model;
 
 public class Car {
-    private Integer idCar;
+    private int idCar;
     private String noRegistration;
     private String brand;
     private String color;
@@ -24,6 +24,7 @@ public class Car {
         this.brand = car.brand;
         this.color = car.color;
     }
+
 
 
     public Integer getIdCar() {

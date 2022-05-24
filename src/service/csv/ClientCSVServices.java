@@ -1,5 +1,6 @@
 package service.csv;
 
+import exceptions.InvalidDataException;
 import model.Client;
 
 import java.io.BufferedReader;
@@ -33,7 +34,7 @@ public class ClientCSVServices implements GenericCSV<Client> {
             String l;
             while ((l=bufferedReader.readLine())!=null){
                 String[] cl = l.split(",");
-                Client client = new Client(cl[0], cl[1], cl[2], Integer.parseInt(cl[3]), cl[4] );
+                Client client = new Client(Integer.parseInt(cl[0]),cl[1], cl[2], cl[3], cl[4] );
 
                 clients.add(client);
             }

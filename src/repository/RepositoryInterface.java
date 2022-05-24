@@ -1,6 +1,8 @@
 package repository;
 
 
+import model.Client;
+
 public interface RepositoryInterface<T>{
 
     public void add(T entity);
@@ -12,5 +14,7 @@ public interface RepositoryInterface<T>{
     public void delete(int index);
 
     public int getSize();
+
+    //void insertClient(Client client);
 
 }

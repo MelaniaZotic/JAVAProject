@@ -1,13 +1,13 @@
 package model;
 
 public class Client extends Person {
-    private Integer userClient;
+    private int userClient;
     private String address;
 
     public Client() {
     }
 
-    public Client(String lastName, String firstName, String phoneNo, Integer userClient, String address) {
+    public Client(int userClient,String lastName, String firstName, String phoneNo, String address) {
         super(lastName, firstName, phoneNo);
         this.userClient = userClient;
         this.address = address;

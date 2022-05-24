@@ -7,6 +7,7 @@ import service.csv.ClientCSVServices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class ClientServices {
     private ClientRepository clientRepository = new ClientRepository();
@@ -29,7 +30,7 @@ public class ClientServices {
         if(userClient == null)
             throw new InvalidDataException("ID invalid");
 
-        Client newCl = new Client(lastName,firstName,phoneNo,userClient,adresa);
+        Client newCl = new Client(userClient,lastName,firstName,phoneNo,adresa);
         clientRepository.add(newCl);
     }
     public void listedFromCSV(){
@@ -47,5 +48,6 @@ public class ClientServices {
         {
             clientCSVServices.write(client);
         }
+
     }
 }

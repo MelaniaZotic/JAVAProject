@@ -1,12 +1,19 @@
 package view;
 
+import config.DB;
+import config.DbConnection;
 import exceptions.InvalidDataException;
 import model.*;
 import model.Package;
+import repository.db.CarDbRepository;
+import repository.db.ClientDbRepository;
+import repository.db.DriverDbRepository;
+import repository.db.PackageDbRepository;
 import service.*;
 import service.csv.AuditServices;
 import service.csv.PackageCSVService;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,28 +29,44 @@ public class App {
     //private TransportServices transportServices = new TransportServices();
     private PackageCSVService packageCSVService = new PackageCSVService();
     private  ClientServices clientServices = new ClientServices();
-    public static void main(String args[]) throws InvalidDataException {
+    public static void main(String args[]) throws InvalidDataException, SQLException, ClassNotFoundException {
+       // view.App app = new view.App();
+        //app.listedInCSVFiles();
+        //app.listedCSVFiles();
+       while(true) {
+           Scanner scanner = new Scanner(System.in);
+           System.out.println("Cum doresti sa lucrezi 1- manual; 2- baza de date?\n");
+           String optiune = scanner.nextLine();
+           view.App app = new App();
+           if(optiune.equals("1")) {
+               app.showMenu();
+               int option = app.readOption();
+               app.execute(option);
+               //app.listedInCSVFiles();
+               //app.listedCSVFiles();
+           }
+           else
+               if(optiune.equals("2")){
+                app.showMenuDb();
+                int op = app.readOption();
+                app.executeDb(op);
+               }
+       }
 
-        view.App app = new view.App();
-            app.showMenu();
-            int option = app.readOption();
-            app.execute(option);
-            app.listedCSVFiles();
-            app.listedInCSVFiles();
     }
-    private void showMenu() {
+    public void showMenu() {
         System.out.println("---------------------");
         System.out.println("What do you want to do?");
         System.out.println("1. Adauga colet");
         System.out.println("2. Adauga sofer");
         System.out.println("3. Adauga masina");
-        System.out.println("4. Adauga  companie");
+        System.out.println("4. Adauga companie");
         System.out.println("5. Adauga  client");
         System.out.println("6. Listare masini");
         System.out.println("7. Listare colete");
         System.out.println("8. Listare soferi");
         System.out.println("9. Listare companie");
-        System.out.println("10. Update driver(update car)");
+        System.out.println("10. Update sofer(update car)");
         System.out.println("11. Delete sofer");
         System.out.println("12. exit");
         System.out.print("Option:");
@@ -70,9 +93,107 @@ public class App {
             throw new InvalidDataException("Invalid number");
         }
     }
+    /*private void executeDb(int option) throws SQLException, ClassNotFoundException {
+        switch (option){
+            case 1:
+                DbConnection db = new DbConnection("jdbc:mysql://localhost:3306/javaproject","root", "ciscosecpa55");
+                CarDbRepository carDb = new CarDbRepository(db);
+                List<Car> cars = carDb.selectCar();
 
-    private void execute(int option) throws InvalidDataException {
-        //Add();
+                for(Car car : cars){
+                    System.out.println(car);
+                }
+                break;
+        }
+    }*/
+    private void executeDb(int option) throws SQLException, ClassNotFoundException {
+        DbConnection db = new DbConnection("jdbc:mysql://localhost:3306/javaproject","root", "ciscosecpa55");
+        CarDbRepository carDb = new CarDbRepository(db);
+        List<Car> c = new ArrayList<>();
+        PackageDbRepository packDb = new PackageDbRepository(db);
+        DriverDbRepository driverDbRepository = new DriverDbRepository(db);
+        ClientDbRepository clientDbRepository = new ClientDbRepository(db);
+        switch (option){
+            case 1:
+                List<Car> cars = carDb.selectCar();
+
+                for(Car car : cars){
+                    System.out.println(car);
+                }
+                break;
+
+            case 2:
+                List<Package> packages = packDb.selectPackage();
+
+                for(Package pack: packages){
+                    System.out.println(pack);
+                }
+                break;
+
+            case 3:
+                List<Driver> drivers =  driverDbRepository.selectDriver();
+                for(Driver driver: drivers){
+                    System.out.println(driver);
+                }
+                break;
+            case 4:
+                List<Client> clients = clientDbRepository.selectClient();
+                for(Client client: clients){
+                    System.out.println(client);
+                }
+                break;
+            case 5:
+
+                List<Client> client = new ArrayList<Client>();
+                System.out.print("User client: ");
+                int userClient = Integer.parseInt(s.nextLine());
+                System.out.print("Last Name: ");
+                String lastName = s.nextLine();
+                System.out.print("First Name: ");
+                String firstName = s.nextLine();
+                System.out.print("Phone No: ");
+                String phoneNo = s.nextLine();
+                System.out.print("Adresa: ");
+                String adresa = s.nextLine();
+                client.add(new Client(userClient,lastName,firstName,phoneNo,adresa));
+
+                clientDbRepository.insertClient(client);
+                break;
+
+
+               // ClientDbRepository clientDbRepository1 = new ClientDbRepository();
+            case 6:
+                List<Car> car = new ArrayList<>();
+                System.out.print("idCar: ");
+                int idCar = Integer.parseInt(s.nextLine());
+                System.out.print("No Registration: ");
+                String noRegistration = s.nextLine();
+                System.out.print("Brand: ");
+                String brand = s.nextLine();
+                System.out.print("Color: ");
+                String color = s.nextLine();
+                car.add(new Car(idCar,noRegistration,brand,color));
+                carDb.insertCar(car);
+                break;
+
+            case 7:
+                System.exit(0);
+        }
+    }
+    public void showMenuDb() {
+        System.out.println("---------------------");
+        System.out.println("What do you want to do?");
+        System.out.println("1. Afisare masini");
+        System.out.println("2. Afisare pachete");
+        System.out.println("3. Afisare soferi");
+        System.out.println("4. Afisare clienti");
+        System.out.println("5. Adauga clienti ");
+        System.out.println("6. Adauga car ");
+        System.out.println("7. Sterge pachet ");
+        System.out.println("7. Exit");
+        System.out.print("Option:");
+    }
+    private void execute(int option) throws InvalidDataException, SQLException, ClassNotFoundException {
         switch (option) {
             case 1:
                 readPackage();
@@ -127,6 +248,7 @@ public class App {
         }
     }
 
+
     private void listedCSVFiles(){
 
         packageServices.listedFromCSV();
@@ -154,13 +276,13 @@ public class App {
 
     void updateDriver() {
         System.out.println("For the driver update the car: ");
-        System.out.println("Transport id: ");
+        System.out.println("Driver id: ");
         int index = s.nextInt();
         s.nextLine();
-        System.out.println("id(No Registration) car: ");
+        System.out.println("No Registration car: ");
         int idCar = s.nextInt();
         s.nextLine();
-        driverServices.updateCar(index,idCar );
+        driverServices.updateCar(index,idCar);
     }
 
 
@@ -220,14 +342,14 @@ public class App {
             System.out.print("The client no: ");
             System.out.println(i+1);
             try {
+                System.out.print("User client: ");
+                int userClient = Integer.parseInt(s.nextLine());
                 System.out.print("Last Name: ");
                 String lastName = s.nextLine();
                 System.out.print("First Name: ");
                 String firstName = s.nextLine();
                 System.out.print("Phone No: ");
                 String phoneNo = s.nextLine();
-                System.out.print("User client: ");
-                int userClient = Integer.parseInt(s.nextLine());
                 System.out.print("Adresa: ");
                 String adresa = s.nextLine();
 
