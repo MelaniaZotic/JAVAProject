@@ -163,20 +163,79 @@ public class App {
 
                // ClientDbRepository clientDbRepository1 = new ClientDbRepository();
             case 6:
+                List<Driver> dr = new ArrayList<>();
+                System.out.print("Driver id: ");
+                int idDriver = Integer.parseInt(s.nextLine());
+                System.out.print("Last name: ");
+                String firsttName = s.nextLine();
+                System.out.print("First name: ");
+                String lasttName = s.nextLine();
+                System.out.print("noPhone: ");
+                String noPhone = s.nextLine();
+                int idCar = Integer.parseInt(s.nextLine());
+                System.out.print("IdCar: ");
+                dr.add(new Driver(idDriver,firsttName,lasttName,noPhone,idCar));
+                driverDbRepository.insertDriver(dr);
+                break;
+            case 7:
+                List<Package> pk = new ArrayList<>();
+                System.out.print("Id: ");
+                int id = Integer.parseInt(s.nextLine());
+                System.out.print("Package Type: ");
+                String type = s.nextLine();
+                System.out.print("weightColet: ");
+                float weightColet = Float.parseFloat(s.nextLine());
+                pk.add(new Package(id,type,weightColet));
+                packDb.insertPack(pk);
+                break;
+
+            case 8:
                 List<Car> car = new ArrayList<>();
                 System.out.print("idCar: ");
-                int idCar = Integer.parseInt(s.nextLine());
+                int idC = Integer.parseInt(s.nextLine());
                 System.out.print("No Registration: ");
                 String noRegistration = s.nextLine();
                 System.out.print("Brand: ");
                 String brand = s.nextLine();
                 System.out.print("Color: ");
                 String color = s.nextLine();
-                car.add(new Car(idCar,noRegistration,brand,color));
+                car.add(new Car(idC,noRegistration,brand,color));
                 carDb.insertCar(car);
                 break;
+            case 9:
+                Package pack = new Package();
+                packDb.deletePackage(pack);
+                break;
+            case 10:
+                Driver driver = new Driver();
+                driverDbRepository.deleteDriver(driver);
+                break;
+            case 11:
+                Client client1 = new Client();
+                clientDbRepository.deleteClient(client1);;
+                break;
+            case 12:
+                Car car1 = new Car();
+                carDb.deleteCar(car1);
+                break;
 
-            case 7:
+            case 13:
+                Package p = new Package();
+                packDb.updatePackage(p);
+                break;
+            case 14:
+                Client cl = new Client();
+                clientDbRepository.updateClient(cl);
+                break;
+
+            case 15:
+                Car c1 = new Car();
+                carDb.updateCar(c1);
+                break;
+            case 16:
+                Driver driver1 = new Driver();
+                driverDbRepository.updateDriver(driver1);
+            case 17:
                 System.exit(0);
         }
     }
@@ -188,9 +247,18 @@ public class App {
         System.out.println("3. Afisare soferi");
         System.out.println("4. Afisare clienti");
         System.out.println("5. Adauga clienti ");
-        System.out.println("6. Adauga car ");
-        System.out.println("7. Sterge pachet ");
-        System.out.println("7. Exit");
+        System.out.println("6. Adauga sofer ");
+        System.out.println("7. Adauga pachete ");
+        System.out.println("8. Adauga masini ");
+        System.out.println("9. Sterge pachet ");
+        System.out.println("10. Sterge sofer");
+        System.out.println("11. Sterge client ");
+        System.out.println("12. Sterge masina ");
+        System.out.println("13. Modifica pachet ");
+        System.out.println("14. Modifica client ");
+        System.out.println("15. Modifica masina");
+        System.out.println("16. Modifica sofer ");
+        System.out.println("17. Exit");
         System.out.print("Option:");
     }
     private void execute(int option) throws InvalidDataException, SQLException, ClassNotFoundException {
@@ -431,12 +499,14 @@ public class App {
             System.out.print("The package no : ");
             System.out.println(i+1);
             try {
+                System.out.print("Id: ");
+                int id = Integer.parseInt(s.nextLine());
                 System.out.print("Package Type: ");
                 String type = s.nextLine();
                 System.out.print("weightColet: ");
                 float weightColet = Float.parseFloat(s.nextLine());
 
-                packageServices.addNewPackages(type, weightColet);
+                packageServices.addNewPackages(id,type, weightColet);
             } catch (NumberFormatException | InvalidDataException numberFormat) {
                 System.out.println("Invalid type or quantity!");
             }

@@ -4,6 +4,7 @@ import config.DB;
 import config.DbConnection;
 import model.Car;
 import model.Client;
+import model.Driver;
 import repository.RepositoryInterface;
 
 import java.sql.Connection;
@@ -61,8 +62,42 @@ public class CarDbRepository{
             System.out.println(ex);
         }
     }
+    public void updateCar(Car car) throws SQLException{
+        Scanner s= new Scanner(System.in);
+        System.out.println("Dati id-ul masinii pe care doresti sa o modifici: ");
+        int cond = Integer.parseInt(s.nextLine());
+        System.out.print("idCar: ");
+        int idCar = Integer.parseInt(s.nextLine());
+        System.out.print("No Registration: ");
+        String noRegistration = s.nextLine();
+        System.out.print("Brand: ");
+        String brand = s.nextLine();
+        System.out.print("Color: ");
+        String color = s.nextLine();
+        String SQL = "Update car set idCar=?, noRegistration=?,brand=?,color=? where idCar=?";
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(SQL);
+        preparedStatement.setInt(1,idCar);
+        preparedStatement.setString(2,noRegistration);
+        preparedStatement.setString(3,brand);
+        preparedStatement.setString(4,color);
+        preparedStatement.setInt(5,cond);
+        preparedStatement.executeUpdate();
+    }
 
-
-
+    public  void deleteCar(Car car) throws SQLException{
+        String SQL = "DELETE FROM car WHERE idCar = ?";
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Ce masina doresti sa stergi?");
+        int index = scan.nextInt();
+        DB db = new DB();
+        try(
+                Connection connection = db.connect();
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL);) {
+            preparedStatement.setInt(1, index);
+            preparedStatement.execute();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

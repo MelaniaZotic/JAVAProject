@@ -28,12 +28,12 @@ public class PackageServices {
         packageRepository.add(newColet);
     }
 
-    public void addNewPackages(String type, Float weightColet) throws InvalidDataException {
+    public void addNewPackages(Integer id,String type, Float weightColet) throws InvalidDataException {
         if (type == null || type.equals(""))
             throw new InvalidDataException("tipColet invalid");
 
         if (weightColet < 0) throw new InvalidDataException("Cantitate invalida!");
-        Package newPackage = new Package(type, weightColet);
+        Package newPackage = new Package(id,type, weightColet);
         packageRepository.add(newPackage);
     }
 

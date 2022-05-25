@@ -36,7 +36,7 @@ public class PackageCSVService implements GenericCSV<Package> {
             String l;
             while ((l = bufferedReader.readLine()) != null) {
                 String[] pack = l.split(",");
-                Package packag = new Package(pack[0], Float.parseFloat(pack[1]));
+                Package packag = new Package(Integer.parseInt(pack[0]),pack[1], Float.parseFloat(pack[2]));
                 packages.add(packag);
             }
         } catch (IOException | NumberFormatException EX) {

@@ -1,19 +1,30 @@
 package model;
 
 public class Package {
+    private int id;
     private String type;
     private Float weightColet;
 
     public Package() {
     }
 
-    public Package(String type, Float weightColet) {
+    public Package(Integer id,String type, Float weightColet) {
+        this.id = id;
         this.type = type;
         this.weightColet = weightColet;
     }
     public Package(Package packages){
+        this.id = packages.id;
         this.type = packages.type;
         this.weightColet = packages.weightColet;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String gettype() {

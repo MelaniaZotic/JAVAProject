@@ -19,6 +19,11 @@ public class Driver extends Person{
         this.car = driver.car;
     }
 
+    public Driver(int idDriver, String firstName, String lasttName, String noPhone, int idCar) {
+
+
+    }
+
     public Integer getIdDriver() {
         return idDriver;
     }

@@ -33,22 +33,6 @@ public class ClientDbRepository {
         return result;
     }
 
-    /*
-        public void insertClient(Client client) {
-            String query = "insert into client values (?,?,?,?,?)";
-            try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
-                preparedStatement.setInt(1, client.getUserClient());
-                preparedStatement.setString(2, client.getfirstName());
-                preparedStatement.setString(3, client.getlastName());
-                preparedStatement.setString(4, client.getphoneNo());
-                preparedStatement.setString(5, client.getAddress());
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-     */
     public void insertClient(List<Client> client) throws SQLException {
         String SQL = " INSERT INTO client(userClient, firstName, lastName, noPhone, address) " + "values(?,?,?,?,?)";
         DB db = new DB();
@@ -73,37 +57,46 @@ public class ClientDbRepository {
             System.out.println(ex);
         }
     }
-}
-
-
-    /*
-    public void insertClient(Connection connection, List<Client> client) throws SQLException {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Ce client doresti sa adaugi in baza de date?");
-        Integer index = scan.nextInt();
-        String query = "insert into client values (?,?,?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1,client.get(index).getUserClient());
-        preparedStatement.setString(2,client.get(index).getfirstName());
-        preparedStatement.setString(3,client.get(index).getlastName());
-        preparedStatement.setString(4,client.get(index).getphoneNo());
-        preparedStatement.setString(5,client.get(index).getAddress());
+    public void updateClient(Client client) throws SQLException{
+        Scanner s = new Scanner(System.in);
+        System.out.println("Dati id-ul clientului pe care doriti sa-l modificati: ");
+        int cond = Integer.parseInt(s.nextLine());
+        System.out.print("User client: ");
+        int userClient = Integer.parseInt(s.nextLine());
+        System.out.print("Last Name: ");
+        String lastName = s.nextLine();
+        System.out.print("First Name: ");
+        String firstName = s.nextLine();
+        System.out.print("Phone No: ");
+        String noPhone = s.nextLine();
+        System.out.print("Adresa: ");
+        String adresa = s.nextLine();
+        String SQL = "UPDATE client set userClient = ?, lastName=?,firstName=?,noPhone=?,address=? where userClient=?";
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(SQL);
+        preparedStatement.setInt(1,userClient);
+        preparedStatement.setString(2,lastName);
+        preparedStatement.setString(3,firstName);
+        preparedStatement.setString(4,noPhone);
+        preparedStatement.setString(5,adresa);
+        preparedStatement.setInt(6,cond);
         preparedStatement.executeUpdate();
     }
-     */
-   /*
-    public  List<Client> void insertClient()throws SQLException{
-        Scanner scanner = new Scanner(System.in);
-        PreparedStatement st = dbConnection.prepareStatement("Insert into client values (?,?,?,?,?)");
-        ResultSet rs = st.executeQuery();
-        List<Client> result = new ArrayList<>();
-        Integer indexClient =
-        while (rs.next()){
-            Client client = new Client();
-            client.;
+    public void deleteClient(Client client){
+        String SQL = "DELETE FROM client where userClient = ?";
+        Scanner s = new Scanner(System.in);
+        System.out.println("Ce client doresti sa stergi?");
+        int index = s.nextInt();
+        DB db = new DB();
+        try(
+                Connection connection = db.connect();
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL);) {
+            preparedStatement.setInt(1, index);
+            preparedStatement.execute();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
-*/
+}
 
 
 
